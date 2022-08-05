@@ -2,15 +2,10 @@ version: '3.7'
 services:
   db:
     build: db
-    #image: postgis/postgis:latest
     environment:
-      POSTGRES_PASSWORD: frank
-      POSTGRES_USER: frank
-      POSTGRES_DB: frank
-      POSTGRES_HOST_AUTH_METHOD: trust
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - db_pgdata:/var/lib/postgresql/data
+      - db_pgdata:/var/lib/postgresql
     ports:
       - 5432:5432
   graphql-engine:
