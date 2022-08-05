@@ -18,13 +18,7 @@ create table overlay.muppets (
     spooky boolean,
     constraint unique_foundation unique (foundation));
     
-insert into foundation.muppets (name, color, spooky) values ('Kermet', 'grey', false);
-insert into foundation.muppets (name, spooky) values ('Gonzu', true);
 
-insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
-update overlay.muppets set color = 'green' where foundation = 1;
-insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
--- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 
 drop view if exists muppets;
 create view muppets as
@@ -37,5 +31,22 @@ from foundation.muppets
 left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id);
 
 select * from muppets;
+
+
+insert into foundation.muppets (name, color, spooky) values ('Kermet', 'grey', false) returning id;
+insert into foundation.muppets (name, spooky) values ('Gonzu', true) returning id;
+insert into foundation.muppets (name, color, spooky) values ('Snarfalopogus', 'blue', true) returning id;
+insert into foundation.muppets (name, color, spooky) values ('Barker', 'yellow', false) returning id;
+insert into foundation.muppets (name, color, spooky) values ('Animal', 'red', true) returning id;
+insert into foundation.muppets (name, color, spooky) values ('Swedish Chef', 'Bork', false) returning id;
+
+
+insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
+update overlay.muppets set color = 'green' where foundation = 1;
+
+insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
+insert into overlay.muppets (foundation, name, color, spooky) values (3, 'Snuffalupagus', 'red', false);
+insert into overlay.muppets (foundation, name, color, spooky) values (4, 'Beaker', 'pink', false);
+-- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 
 --delete from foundation.muppets where id = 1; -- show cascade delete
