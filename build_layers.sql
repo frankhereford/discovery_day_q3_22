@@ -1,31 +1,37 @@
-drop table foundation;
-create table foundation (
+drop schema foundation cascade;
+create schema foundation;
+
+drop schema overlay cascade;
+create schema overlay;
+
+create table foundation.muppets (
     id serial primary key,
     name character varying,
     color character varying,
     spooky boolean);
     
-drop table overlay;
-create table overlay (
+create table overlay.muppets (
     id serial primary key,
-    foundation integer,
+    foundation integer references foundation.muppets(id),
     name character varying,
     color character varying,
     spooky boolean);
     
+    
+insert into foundation.muppets (name, color, spooky) values ('Kermit', 'green', false);
+insert into foundation.muppets (name, spooky) values ('Gonzo', true);
 
-insert into foundation (name, color, spooky) values ('Kermit', 'green', false);
-select * from foundation;
+insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
+insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
 
-insert into overlay (foundation, name) values (1, 'Kermit the Frog');
-
-
+drop view if exists muppets;
+create view muppets as
 select 
-coalesce(overlay.name, foundation.name) as name,
-coalesce(overlay.color, foundation.color) as color,
-coalesce(overlay.spooky, foundation.spooky) as spooky
-from foundation
-left join overlay on (overlay.foundation = foundation.id);
+foundation.muppets.id,
+coalesce(overlay.muppets.name, foundation.muppets.name) as name,
+coalesce(overlay.muppets.color, foundation.muppets.color) as color,
+coalesce(overlay.muppets.spooky, foundation.muppets.spooky) as spooky
+from foundation.muppets
+left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id);
 
-
-truncate overlay;
+select * from muppets;
