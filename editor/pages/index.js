@@ -65,6 +65,7 @@ export async function getStaticProps() {
         }
       }
     `,
+      fetchPolicy: "no-cache",
   });
 
   return {
