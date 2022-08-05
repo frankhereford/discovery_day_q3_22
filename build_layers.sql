@@ -15,8 +15,8 @@ create table overlay.muppets (
     foundation integer references foundation.muppets(id) on delete cascade,
     name character varying,
     color character varying,
-    spooky boolean);
-    
+    spooky boolean,
+    constraint unique_foundation unique (foundation));
     
 insert into foundation.muppets (name, color, spooky) values ('Kermit', 'green', false);
 insert into foundation.muppets (name, spooky) values ('Gonzo', true);
