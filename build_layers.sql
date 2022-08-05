@@ -18,10 +18,11 @@ create table overlay.muppets (
     spooky boolean,
     constraint unique_foundation unique (foundation));
     
-insert into foundation.muppets (name, color, spooky) values ('Kermit', 'green', false);
-insert into foundation.muppets (name, spooky) values ('Gonzo', true);
+insert into foundation.muppets (name, color, spooky) values ('Kermet', 'grey', false);
+insert into foundation.muppets (name, spooky) values ('Gonzu', true);
 
 insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
+update overlay.muppets set color = 'green' where foundation = 1;
 insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
 
 drop view if exists muppets;
