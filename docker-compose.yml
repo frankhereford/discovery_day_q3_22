@@ -15,9 +15,6 @@ services:
       - 5432:5432
   graphql-engine:
     image: hasura/graphql-engine:latest
-    #image: hasura/graphql-engine:v1.3.3
-    #image: hasura/graphql-engine:v1.2.1
-    #image: frankinaustin/graphql-engine-arm64:v1.3.3
     container_name: visionzero_hasura
     ports:
       - 8080:8080
