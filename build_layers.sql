@@ -12,7 +12,7 @@ create table foundation.muppets (
     
 create table overlay.muppets (
     id serial primary key,
-    foundation integer references foundation.muppets(id),
+    foundation integer references foundation.muppets(id) on delete cascade,
     name character varying,
     color character varying,
     spooky boolean);
@@ -35,3 +35,5 @@ from foundation.muppets
 left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id);
 
 select * from muppets;
+
+--delete from foundation.muppets where id = 1;
