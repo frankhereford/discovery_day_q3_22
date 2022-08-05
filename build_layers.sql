@@ -24,6 +24,7 @@ insert into foundation.muppets (name, spooky) values ('Gonzu', true);
 insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
 update overlay.muppets set color = 'green' where foundation = 1;
 insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
+-- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 
 drop view if exists muppets;
 create view muppets as
@@ -37,4 +38,4 @@ left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id
 
 select * from muppets;
 
---delete from foundation.muppets where id = 1;
+--delete from foundation.muppets where id = 1; -- show cascade delete
