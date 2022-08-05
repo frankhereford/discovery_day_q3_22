@@ -1,6 +1,33 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  gql,
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "http://localhost:8080/v1/graphql",
+  cache: new InMemoryCache(),
+});
+
+client
+  .query({
+    query: gql`
+      query get_muppets {
+        muppets {
+          id
+          color
+          name
+          spooky
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+
 
 export default function Home() {
   return (
@@ -12,14 +39,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
