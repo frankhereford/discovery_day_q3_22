@@ -56,5 +56,8 @@ insert into overlay.muppets (foundation, name, color)         values (6, 'Swedis
 -- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 -- delete from foundation.muppets where id = 1; -- show cascade delete
 
+select * from overlay.muppets;
+
 update overlay.muppets set color = 'green' where foundation = 1;
+
 select * from overlay.muppets_history;
