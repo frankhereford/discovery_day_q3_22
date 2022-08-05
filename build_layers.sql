@@ -45,7 +45,7 @@ insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
 update overlay.muppets set color = 'green' where foundation = 1;
 
 insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
-insert into overlay.muppets (foundation, name, color, spooky) values (3, 'Snuffalupagus', 'red', false);
+insert into overlay.muppets (foundation, name, color, spooky) values (3, 'Mr. Snuffalupagus', 'red', false);
 insert into overlay.muppets (foundation, name, color, spooky) values (4, 'Beaker', 'pink', false);
 -- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 
