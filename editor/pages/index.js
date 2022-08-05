@@ -40,7 +40,6 @@ export default function Home({muppets}) {
   );
 }
 
-
 export async function getStaticProps() {
   const { data } = await client.query({
     query: gql`
