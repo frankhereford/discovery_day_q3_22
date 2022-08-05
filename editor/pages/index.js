@@ -28,7 +28,7 @@ export default function Home({muppets}) {
                 {muppet.name}
               </h3>
               <p>
-                Color: {muppet.color.charAt(0).toUpperCase() + muppet.color.slice(1)}
+                Color: {muppet.color ? muppet.color.charAt(0).toUpperCase() + muppet.color.slice(1) : "Unknown"}
               </p>
               <p>Spooky: {muppet.spooky ? "✅" : "❌"}</p>
             </div>
