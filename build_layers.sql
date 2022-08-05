@@ -30,6 +30,8 @@ coalesce(overlay.muppets.spooky, foundation.muppets.spooky) as spooky
 from foundation.muppets
 left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id);
 
+truncate foundation.muppets cascade;
+
 select * from muppets;
 
 
@@ -37,8 +39,8 @@ insert into foundation.muppets (name, color, spooky) values ('Kermet', 'grey', f
 insert into foundation.muppets (name, spooky) values ('Gonzu', true) returning id;
 insert into foundation.muppets (name, color, spooky) values ('Snarfalopogus', 'blue', true) returning id;
 insert into foundation.muppets (name, color, spooky) values ('Barker', 'yellow', false) returning id;
-insert into foundation.muppets (name, color, spooky) values ('Animal', 'red', true) returning id;
-insert into foundation.muppets (name, color, spooky) values ('Swedish Chef', 'Bork', false) returning id;
+insert into foundation.muppets (name, color, spooky) values ('Arminal', 'red', false) returning id;
+insert into foundation.muppets (name, color, spooky) values ('French Chef', 'Fork Fork Fork', false) returning id;
 
 
 insert into overlay.muppets (foundation, name) values (1, 'Kermit the Frog');
@@ -47,6 +49,9 @@ update overlay.muppets set color = 'green' where foundation = 1;
 insert into overlay.muppets (foundation, color, name) values (2, 'blue', 'Gonzo the Great');
 insert into overlay.muppets (foundation, name, color, spooky) values (3, 'Mr. Snuffalupagus', 'red', false);
 insert into overlay.muppets (foundation, name, color, spooky) values (4, 'Beaker', 'pink', false);
+insert into overlay.muppets (foundation, name, spooky) values (5, 'Animal', true);
+insert into overlay.muppets (foundation, name, color) values (6, 'Swedish Chef', 'Bork, Bork, Bork!');
+
 -- insert into overlay.muppets (foundation, color, name) values (2, 'black','Gonzo the Great');  -- should fail
 
 --delete from foundation.muppets where id = 1; -- show cascade delete
