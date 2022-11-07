@@ -10,7 +10,8 @@ create table foundation.muppets (
     id serial primary key,
     name character varying,
     color character varying,
-    spooky boolean);
+    spooky boolean,
+    age integer);
     
 create table overlay.muppets (
     id serial primary key,
@@ -18,8 +19,10 @@ create table overlay.muppets (
     name character varying,
     color character varying,
     spooky boolean,
+    age integer,
     sys_period tstzrange not null,
     constraint unique_foundation unique (foundation));
+    
     
 create table overlay.muppets_history (like overlay.muppets);
 
@@ -37,27 +40,35 @@ select
 foundation.muppets.id,
 coalesce(overlay.muppets.name, foundation.muppets.name) as name,
 coalesce(overlay.muppets.color, foundation.muppets.color) as color,
-coalesce(overlay.muppets.spooky, foundation.muppets.spooky) as spooky
+coalesce(overlay.muppets.spooky, foundation.muppets.spooky) as spooky,
+coalesce(overlay.muppets.age, foundation.muppets.age) as age,
+case 
+  when coalesce(overlay.muppets.age, foundation.muppets.age) is not null and coalesce(overlay.muppets.age, foundation.muppets.age) < 75
+  then 75 - coalesce(overlay.muppets.age, foundation.muppets.age)
+  when coalesce(overlay.muppets.age, foundation.muppets.age) is not null and coalesce(overlay.muppets.age, foundation.muppets.age) >= 75
+  then 0
+  else null 
+end as years_life_lost
 from foundation.muppets
 left join overlay.muppets on (overlay.muppets.foundation = foundation.muppets.id);
 
 
 
-insert into foundation.muppets (name, color, spooky) values ('Kermet', 'grey', false) returning id;
-insert into foundation.muppets (name, spooky)        values ('Gonzu', true) returning id;
+insert into foundation.muppets (name, color, spooky, age) values ('Kermet', 'grey', false, 42) returning id;
+insert into foundation.muppets (name, spooky, age)        values ('Gonzu', true, 21) returning id;
 insert into foundation.muppets (name, color, spooky) values ('Snarfalopogus', 'blue', true) returning id;
-insert into foundation.muppets (name, color, spooky) values ('Barker', 'yellow', false) returning id;
-insert into foundation.muppets (name, color, spooky) values ('Arminal', 'red', false) returning id;
-insert into foundation.muppets (name, color, spooky) values ('French Chef', 'Fork Fork Fork', false) returning id;
+insert into foundation.muppets (name, color, spooky, age) values ('Barker', 'yellow', false, 79) returning id;
+insert into foundation.muppets (name, color, spooky, age) values ('Arminal', 'red', false, 45) returning id;
+insert into foundation.muppets (name, color, spooky, age) values ('French Chef', 'Fork Fork Fork', false, 35) returning id;
 
 select * from muppets;
 
 insert into overlay.muppets (foundation, name)                values (1, 'Kermit the Frog');
-insert into overlay.muppets (foundation, color, name)         values (2, 'blue', 'Gonzo the Great');
-insert into overlay.muppets (foundation, name, color, spooky) values (3, 'Mr. Snuffalupagus', 'red', false);
-insert into overlay.muppets (foundation, name, color)         values (4, 'Beaker', 'pink');
-insert into overlay.muppets (foundation, name, spooky)        values (5, 'Animal', true);
-insert into overlay.muppets (foundation, name, color)         values (6, 'Swedish Chef', 'Bork, Bork, Bork!');
+insert into overlay.muppets (foundation, color, name, age)         values (2, 'blue', 'Gonzo the Great', 22);
+insert into overlay.muppets (foundation, name, color, spooky, age) values (3, 'Mr. Snuffalupagus', 'red', false, 56);
+insert into overlay.muppets (foundation, name, color, age)         values (4, 'Beaker', 'pink', 80);
+insert into overlay.muppets (foundation, name, spooky, age)        values (5, 'Animal', true, 46);
+insert into overlay.muppets (foundation, name, color, age)         values (6, 'Swedish Chef', 'Bork, Bork, Bork!', 36);
 
 select * from muppets;
 
